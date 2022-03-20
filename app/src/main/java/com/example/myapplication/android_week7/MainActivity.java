@@ -40,11 +40,11 @@ public class MainActivity extends Activity {
             public void onClick(View v) { onStart();
                 textView.setText(""); button.setEnabled(false);
                 inputValue = Integer.parseInt(editText.getText().toString());
+                if(inputValue<=0)
+                    inputValue=1;
                 accum = 0; myBar.setMax(inputValue);
                 myBar.setProgress(0);
                 myBar.setVisibility(View.VISIBLE);
-
-
                 Thread myBackgroundThread = new Thread( backgroundTask, "backAlias1");
                 myBackgroundThread.start();}// onClick
         });
@@ -68,12 +68,13 @@ public class MainActivity extends Activity {
             //    myBar.incrementProgressBy(progressStep);
                 myBar.setProgress(accum);
                 int percent = (accum*100)/inputValue;
-                textView.setText(   +percent+ " % "  );
+                textView.setText(   percent+ " % "  );
                 accum += (progressStep);
 
                 if (accum >= inputValue) {
                     textView.setText("100%");
                    // myBar.setVisibility(View.INVISIBLE);
+                    myBar.setProgress(inputValue);
                     button.setEnabled(true);
                 }
             }
